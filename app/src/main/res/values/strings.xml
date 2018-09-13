@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">TeamTravel</string>
+    <string name="placeNameHint">Place name</string>
+    <string name="latitudeHint">Latitude</string>
+    <string name="longitudeHint">Longitude</string>
+    <string name="addPlaceBtnStr">Add place</string>
+    <string name="defFullName">NoFullname</string>
+    <string name="selectedLatitudeLabelStr">Latitude:</string>
+    <string name="selectedLongitudeLabelStr">Longitude:</string>
+    <string name="defLatitudeVal">0.000000</string>
+    <string name="defLongitudeVal">0.000000</string>
+    <string name="distanceLabelStr">Distance:</string>
+    <string name="distanceValueStr">0 м.</string>
+    <string name="defIvan">Иван</string>
+    <string name="defIvanov">Иванов</string>
+    <string name="def15m">15 м.</string>
+    <string name="personNameIDPattern">person_name_</string>
+    <string name="personDistanceIDPattern">person_dist_</string>
+</resources>
