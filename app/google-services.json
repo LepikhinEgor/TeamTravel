@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "959866163965",
+    "firebase_url": "https://teamtravel-a916a.firebaseio.com",
+    "project_id": "teamtravel-a916a",
+    "storage_bucket": "teamtravel-a916a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959866163965:android:d48b8b58d5b3a45d",
+        "android_client_info": {
+          "package_name": "com.example.lepik.teamtravel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959866163965-bluv4nf2vljp2lertrg874t4252c2dvl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lepik.teamtravel",
+            "certificate_hash": "af0d75b1ce80cdc983b37f89d85fc6278fec2972"
+          }
+        },
+        {
+          "client_id": "959866163965-o9utkrq4m79ah1k46k7m8n6jsc1bv6o0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgBa1iOkB80fm4iZnoGcLUi5Ee8Jd-7d4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959866163965-o9utkrq4m79ah1k46k7m8n6jsc1bv6o0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

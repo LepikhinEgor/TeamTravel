@@ -16,4 +16,6 @@
     <string name="def15m">15 м.</string>
     <string name="personNameIDPattern">person_name_</string>
     <string name="personDistanceIDPattern">person_dist_</string>
+    <string name="inputSecondNamestr">Place second name</string>
+    <string name="placeSecondNameHint">Place second name</string>
 </resources>

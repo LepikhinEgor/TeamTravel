@@ -6,11 +6,15 @@ import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
 public class Person {
-    private int id;
+    private String id;
     private String firstName;
     private String secondName;
     private double latitudeCoord;
     private double longitudeCoord;
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -44,7 +48,7 @@ public class Person {
         this.longitudeCoord = longitudeCoord;
     }
 
-    public int getID() {
+    public String getID() {
         return id;
     }
 
@@ -66,3 +70,4 @@ public class Person {
         return distance;
     }
 }
+
