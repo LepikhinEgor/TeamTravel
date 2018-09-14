@@ -1,16 +1,20 @@
 package com.example.lepik.teamtravel;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -23,16 +27,13 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
 
     static int lastID;
     static int screenSizeX;
     LinearLayout placesList;
 
-    EditText inputName;
-    EditText inputSurname;
-    EditText inputLatitude;
-    EditText inputLongitude;
+    Button toAddActivityBtn;
 
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -42,7 +43,27 @@ public class MainActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent inputIntent = getIntent();
+
+        toAddActivityBtn = findViewById(R.id.toAddActivity);
+
+        toAddActivityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent((MainActivity.this), AddNewPlaceActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+
         placesList = findViewById(R.id.placesList);
+
+        placesList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("ff", "CLICKED");
+            }
+        });
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -87,31 +108,29 @@ public class MainActivity extends Activity{
 
     }
 
-    public void addNewPlace(View view) {
-        //Добавление в разметку нового места
-        inputName = findViewById(R.id.inputName);
-        inputSurname = findViewById(R.id.inputSurname);
-        inputLatitude = findViewById(R.id.inputLatitude);
-        inputLongitude = findViewById(R.id.inputLongitude);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        String inputedName = inputName.getText().toString();
-        String inputedSurname = inputSurname.getText().toString();
-        double inputedLatitude = Double.parseDouble(inputLatitude.getText().toString());
-        double inputedLongitude = Double.parseDouble(inputLongitude.getText().toString());
+        Log.d("ff", "RESULT");
+        if (data == null) {
+            Log.d("ex", "Failed to retrieve data from other Activity");
+            return;
+        }
 
-        Person person = new Person();
+        Person person = (Person)data.getSerializableExtra("newPerson");
 
         String newID = myRef.push().getKey();
-
         person.setId(newID);
-        person.setFirstName(inputedName);
-        person.setSecondName(inputedSurname);
-        person.setLatitudeCoord(inputedLatitude);
-        person.setLongitudeCoord(inputedLongitude);
 
+        Log.d("ff",person.getFirstName());
+        Log.d("ff",Double.toString(person.getLatitudeCoord()));
+        Log.d("ff",Double.toString(person.getLongitudeCoord()));
         myRef.child(newID).setValue(person);
+    }
 
-        addNewLocation(person);
+    public void addNewPlace(View view) {
+        //Добавление в разметку нового места
     }
 
     public void addNewLocation(Person person){

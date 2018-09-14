@@ -18,4 +18,5 @@
     <string name="personDistanceIDPattern">person_dist_</string>
     <string name="inputSecondNamestr">Place second name</string>
     <string name="placeSecondNameHint">Place second name</string>
+    <string name="searchBtnText">Search</string>
 </resources>

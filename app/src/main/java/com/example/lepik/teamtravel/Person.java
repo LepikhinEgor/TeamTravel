@@ -1,11 +1,13 @@
 package com.example.lepik.teamtravel;
 
+import java.io.Serializable;
+
 import static java.lang.Math.acos;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
-public class Person {
+public class Person implements Serializable{
     private String id;
     private String firstName;
     private String secondName;
