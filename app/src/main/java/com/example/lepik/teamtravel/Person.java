@@ -9,6 +9,8 @@ import static java.lang.Math.toRadians;
 
 public class Person implements Serializable{
     private String id;
+    private String email;
+    private String password;
     private String firstName;
     private String secondName;
     private double latitudeCoord;
@@ -54,6 +56,22 @@ public class Person implements Serializable{
         return id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public double calcDistanceFrom(double latitude, double longitude) {
         //считает расстояние в метрах между двумя точками по алгоритму из Википедии(ортодромия)
         //https://is.gd/dUuAFx
@@ -71,5 +89,6 @@ public class Person implements Serializable{
 
         return distance;
     }
+
 }
 
