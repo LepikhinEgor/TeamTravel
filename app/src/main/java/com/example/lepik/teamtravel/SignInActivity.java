@@ -34,6 +34,9 @@ public class SignInActivity extends Activity {
         email = findViewById(R.id.inputEmailAuth);
         password = findViewById(R.id.inputPasswordAuth);
 
+        email.setText("blet@mail.ru");
+        password.setText("qwerty");
+
         signIn = findViewById(R.id.signInBtn);
         toRegistration = findViewById(R.id.registrBtnAuth);
 

@@ -40,4 +40,5 @@
     <string name="inputFirstNameRegStr">First name</string>
     <string name="registrationButton">Registration</string>
     <string name="registrationBtnAuthStr">Registration</string>
+    <string name="defUserNameStr">username</string>
 </resources>

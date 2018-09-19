@@ -25,7 +25,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:layout_width="383dp"
         android:layout_height="28dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -166,23 +166,89 @@
                     android:layout_weight="3"
                     android:gravity="center"
                     android:text="@string/def15m" />
+
             </LinearLayout>
+            <ImageButton
+                android:id="@+id/addNewPlace"
+                android:layout_width="92dp"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_input_add"
+                android:contentDescription="@string/addPlaceBtnStr"/>
+
         </LinearLayout>
     </HorizontalScrollView>
 
-    <Button
-        android:id="@+id/toAddActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="62dp"
+    <ImageButton
+        android:id="@+id/imageButton6"
+        android:layout_width="61dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@android:drawable/sym_def_app_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/userFirstName"
+        android:layout_width="123dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        android:layout_marginTop="16dp"
+        android:gravity="end"
+        android:text="@string/defUserNameStr"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton6"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userSecondName"
+        android:layout_width="123dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="end"
+        android:text="@string/defUserNameStr"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton6"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userFirstName" />
+
+    <TextView
+        android:id="@+id/latitude"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="0"
+        app:layout_constraintEnd_toStartOf="@+id/userFirstName"
+        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/longitude"
+        android:layout_width="76dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="0"
+        app:layout_constraintEnd_toStartOf="@+id/userSecondName"
+        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/latitude" />
+
 
 </android.support.constraint.ConstraintLayout>
