@@ -13,8 +13,26 @@ public class Person implements Serializable{
     private String password;
     private String firstName;
     private String secondName;
-    private double latitudeCoord;
-    private double longitudeCoord;
+    private String teamId;
+
+    private boolean inTeam;
+    private boolean isAdmin;
+
+    public boolean isInTeam() {
+        return inTeam;
+    }
+
+    public void setInTeam(boolean inTeam) {
+        this.inTeam = inTeam;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -34,22 +52,6 @@ public class Person implements Serializable{
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
-    }
-
-    public Double getLatitudeCoord() {
-        return latitudeCoord;
-    }
-
-    public void setLatitudeCoord(Double latitudeCoord) {
-        this.latitudeCoord = latitudeCoord;
-    }
-
-    public Double getLongitudeCoord() {
-        return longitudeCoord;
-    }
-
-    public void setLongitudeCoord(Double longitudeCoord) {
-        this.longitudeCoord = longitudeCoord;
     }
 
     public String getID() {
@@ -72,23 +74,12 @@ public class Person implements Serializable{
         this.password = password;
     }
 
-    public double calcDistanceFrom(double latitude, double longitude) {
-        //считает расстояние в метрах между двумя точками по алгоритму из Википедии(ортодромия)
-        //https://is.gd/dUuAFx
-        final double meridianDegreeLength = 111134.856;
-
-        double distance;
-        double angleBetween;
-        double angleCos;
-
-        angleCos = sin(toRadians(latitudeCoord))* sin(toRadians(latitude));
-        angleCos += cos(toRadians(latitudeCoord))*cos(toRadians(latitude))*cos(toRadians(longitude - longitudeCoord));
-        angleBetween = acos(angleCos);
-
-        distance = 6371300 * angleBetween;
-
-        return distance;
+    public String getTeamId() {
+        return teamId;
     }
 
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
 }
 

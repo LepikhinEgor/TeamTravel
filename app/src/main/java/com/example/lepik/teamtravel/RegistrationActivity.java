@@ -107,9 +107,6 @@ public class RegistrationActivity extends AppCompatActivity {
         newPerson.setSecondName(inputedSecondName);
         newPerson.setEmail(inputedEmail);
         newPerson.setPassword(inputedPassword);
-        newPerson.setLongitudeCoord(0.0);
-        newPerson.setLatitudeCoord(0.0);
-
 
         auth.createUserWithEmailAndPassword(inputedEmail, inputedPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

@@ -41,4 +41,9 @@
     <string name="registrationButton">Registration</string>
     <string name="registrationBtnAuthStr">Registration</string>
     <string name="defUserNameStr">username</string>
+    <string name="teamNameStr">Team name</string>
+    <string name="teamPasswordStr">Password</string>
+    <string name="createTeamLabelStr">Create team</string>
+    <item name="personData" type="id" />
+    <item name="personLocationData" type="id" />
 </resources>

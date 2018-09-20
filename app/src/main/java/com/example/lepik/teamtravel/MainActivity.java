@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
     TextView longitude;
 
     Person user;
+    PersonLocation userLocation;
     ArrayList<LinearLayout> personsLayout;
     static int screenSizeX;
     LinearLayout placesList;
@@ -55,6 +56,9 @@ public class MainActivity extends Activity {
     TextView userFirstName;
     TextView userSecondName;
 
+    Button createTeamBtn;
+    Button findTeamBtn;
+
     private FirebaseAuth auth;
 
     private LocationManager locationManager;
@@ -64,7 +68,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        user = new Person();
+        userLocation = new PersonLocation();
+        user = new Person(); //ИСПРАВИТЬ СРАЗУ ПРИ ВОЗМОЖНОСТИ
         userFirstName = findViewById(R.id.userFirstName);
         userSecondName = findViewById(R.id.userSecondName);
 
@@ -76,10 +81,22 @@ public class MainActivity extends Activity {
         selectedPersLatitude = findViewById(R.id.selectedLatitudeValue);
         selectedPersLongitude = findViewById(R.id.selectedLongitudeValue);
 
+        createTeamBtn = findViewById(R.id.createTeamBtn);
+        findTeamBtn = findViewById(R.id.findTeamBtn);
+        placesList = findViewById(R.id.placesList);
+
         latitude = findViewById(R.id.latitude);
         longitude = findViewById(R.id.longitude);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        createTeamBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent((MainActivity.this), CreateTeamActivity.class);
+                startActivityForResult(intent, 2);
+            }
+        });
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -105,7 +122,6 @@ public class MainActivity extends Activity {
         });
 
 
-        placesList = findViewById(R.id.placesList);
 
         placesList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,21 +193,28 @@ public class MainActivity extends Activity {
     private LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
+            PersonLocation personLocation = new PersonLocation();
+
+            personLocation.setLastLatitude(location.getLatitude());
+            personLocation.setLastLongitude(location.getLongitude());
+            personLocation.setDate(location.getTime());
+            personLocation.setId(user.getID());
+
+            userLocation = personLocation;
+
             latitude.setText(Double.toString(location.getLatitude()));
             longitude.setText(Double.toString(location.getLongitude()));
-            user.setLatitudeCoord(location.getLatitude());
-            user.setLongitudeCoord(location.getLongitude());
 
             for (LinearLayout layout: personsLayout) {
                 int childCount = layout.getChildCount();
                 for (int i = 0; i < childCount; i++) {
                     String tag = (String)layout.getChildAt(i).getTag();
                     if (tag != null && tag.equals("Distance")) {
-                        Person person = (Person)layout.getTag();
-                        if (person != null) {
-                        double distance = person.calcDistanceFrom(user.getLatitudeCoord(), user.getLongitudeCoord());
-                        TextView distView = (TextView)layout.getChildAt(i);
-                        distView.setText(Double.toString(distance));
+                        PersonLocation persLocation = (PersonLocation)layout.getTag(R.id.personLocationData);
+                        if (persLocation != null) {
+                            double distance = personLocation.calcDistanceFrom(location.getLatitude(), location.getLongitude());
+                            TextView distView = (TextView)layout.getChildAt(i);
+                            distView.setText(Double.toString(distance));
                         }
                     }
                 }
@@ -218,33 +241,48 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d("ff", "RESULT");
-        if (data == null) {
-            Log.d("ex", "Failed to retrieve data from other Activity");
-            return;
+        switch (requestCode) {
+            case 1: {
+                Log.d("ff", "RESULT");
+                if (data == null) {
+                    Log.d("ex", "Failed to retrieve data from other Activity");
+                    return;
+                }
+
+                Person person = (Person)data.getSerializableExtra("newPerson");
+
+                String newID = teamsRef.push().getKey();
+                person.setId(newID);
+
+                teamsRef.child(newID).setValue(person);
+                break;
+            }
+            case 2 : {
+                if (data == null) {
+                    Log.d("ex", "Failed to retrieve data from other Activity");
+                    return;
+                }
+
+                String teamID = data.getStringExtra("TeamId");
+                String teamName = data.getStringExtra("TeamName");
+
+                teamsRef.child(teamID).child(user.getID()).setValue(userLocation);
+            }
         }
-
-        Person person = (Person)data.getSerializableExtra("newPerson");
-
-        String newID = teamsRef.push().getKey();
-        person.setId(newID);
-
-        Log.d("ff",person.getFirstName());
-        Log.d("ff",Double.toString(person.getLatitudeCoord()));
-        Log.d("ff",Double.toString(person.getLongitudeCoord()));
-        teamsRef.child(newID).setValue(person);
     }
 
 
     public void addNewLocation(Person person){
         //добавление элемента в список мест
+        PersonLocation emptyPersonLocation = new PersonLocation();
 
         toAddActivityBtn.setVisibility(View.GONE);
 
         LinearLayout newPlace = new LinearLayout(this);
         newPlace.setOrientation(LinearLayout.VERTICAL);
 
-        newPlace.setTag(person);
+        newPlace.setTag(R.id.personData, person);
+        newPlace.setTag(R.id.personLocationData, emptyPersonLocation);
 
         LinearLayout.LayoutParams newPlaceLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -321,11 +359,12 @@ public class MainActivity extends Activity {
         newPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Person pers = (Person)v.getTag();
+                Person pers = (Person)v.getTag(R.id.personData);
+                PersonLocation persLocation = (PersonLocation) v.getTag(R.id.personLocationData);
                 String fullname = pers.getFirstName() + " " + pers.getSecondName();
                 selectedPersFullName.setText(fullname);
-                selectedPersLatitude.setText(Double.toString(pers.getLatitudeCoord()));
-                selectedPersLongitude.setText(Double.toString(pers.getLongitudeCoord()));
+                selectedPersLatitude.setText(Double.toString(persLocation.getLastLatitude()));
+                selectedPersLongitude.setText(Double.toString(persLocation.getLastLongitude()));
             }
         });
 
